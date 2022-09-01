@@ -1,0 +1,3 @@
+C:/gitprj/lcd_pwm_demo/build/pioasm/CMakeFiles/pioasm.dir
+C:/gitprj/lcd_pwm_demo/build/pioasm/CMakeFiles/edit_cache.dir
+C:/gitprj/lcd_pwm_demo/build/pioasm/CMakeFiles/rebuild_cache.dir
