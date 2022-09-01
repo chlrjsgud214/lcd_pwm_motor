@@ -34,6 +34,8 @@
 #define TP_IRQ_PIN		17
 #define SD_CS_PIN		22
 #define PWM_LED         25
+#define PWM_M_L        0
+#define PWM_M_R        1
 
 #define SPI_PORT		spi1
 #define  MAX_BMP_FILES  25 
@@ -66,6 +68,12 @@ void Driver_Delay_ms(uint32_t xms);
 void Driver_Delay_us(uint32_t xus);
 
 void DEV_PWM_Init(void);
-void PWMON(uint16_t val);
+void PWM_LED_ON(uint16_t val);
+void PWM_M_L_deg(uint16_t val);
+void PWM_M_R_deg(uint16_t val);
 void PWMOFF(void);
+
+void Motor_grab(void);
+void Motor_put(uint8_t deg);
+
 #endif

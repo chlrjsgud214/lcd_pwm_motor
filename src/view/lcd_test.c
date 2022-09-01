@@ -54,9 +54,9 @@ int lcd_test(void)
 	LCD_Show_bmp(bmp_scan_dir,lcd_scan_dir);	
 	TP_GetAdFac(); // 터치 캘리브레이션
 	//TP_Dialog();
-	TP_gesmain();
 	// TP_gesvallist();
 	//Driver_Delay_ms(50);
+	TP_pwm_motor_main();
 	while(1){		
 		TP_DrawBoard(); 
 	}

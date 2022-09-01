@@ -15,7 +15,8 @@
 #include "hardware/clocks.h"
 
 static uint32_t slice_num;
-static uint8_t pwm_val=100;
+static uint32_t motor_L;
+static uint32_t motor_R;
 
 void DEV_Digital_Write(UWORD Pin, UBYTE Value)
 {
@@ -64,33 +65,68 @@ note:
 ********************************************************************************/
 void DEV_PWM_Init(void)
 {	
-	gpio_set_function(PWM_LED, GPIO_FUNC_PWM);
+	gpio_set_function(PWM_LED, GPIO_FUNC_PWM); // 핀기능 설정
+  gpio_set_function(PWM_M_L, GPIO_FUNC_PWM);
+  gpio_set_function(PWM_M_R, GPIO_FUNC_PWM);
+
   slice_num = pwm_gpio_to_slice_num(PWM_LED); // 2B
+  motor_L = pwm_gpio_to_slice_num(PWM_M_L); // PWM_A0
+  motor_R = pwm_gpio_to_slice_num(PWM_M_R); // PWM_B0
 
   pwm_set_clkdiv(slice_num, clock_get_hz(clk_sys)/1000000); //133,000,000
+  pwm_set_clkdiv(motor_L, clock_get_hz(clk_sys)/1000000); //133,000,000
+  pwm_set_clkdiv(motor_R, clock_get_hz(clk_sys)/1000000); //133,000,000
 
-  pwm_set_wrap(slice_num, 1000);
-  pwm_set_chan_level(slice_num, PWM_CHAN_B, 0);
+  pwm_set_wrap(slice_num, 255); // PWM 제어 샘플링 PWM 300값으로 고정
+  pwm_set_wrap(motor_L, 1800); // 180도 제어 
+  pwm_set_wrap(motor_R, 1800); 
+
+  pwm_set_chan_level(slice_num, PWM_CHAN_B, 0); //GP25 - PWM B3
+  pwm_set_chan_level(motor_L, PWM_CHAN_A, 60*10); // GP0 - PWM A0
+  pwm_set_chan_level(motor_R, PWM_CHAN_B, 30*10); // GP0 - PWM B0
+
   pwm_set_enabled(slice_num, true);
-  pwmgui=0;
+  pwm_set_enabled(motor_L, true);
+  pwm_set_enabled(motor_R, true);
 }
  
 
-void PWMON(uint16_t val)
+void PWM_LED_ON(uint16_t val) // 
 {
-  uint32_t pwm_top;
-  uint32_t pwm_duty;
 
-
-  pwm_set_wrap(slice_num, 255);
   
-//   pwm_duty = cmap(val, 0, 255, 0, 1000);
 
   pwm_set_chan_level(slice_num, PWM_CHAN_B, val);
 
 }
 
-void PWMOFF(void)
+void PWM_M_L_deg(uint16_t val) // 모터 LEFT 제어 60~90도
+{  
+//   pwm_duty = cmap(val, 0, 255, 0, 1000);
+  // if(val >= 200 && val<= 255)
+  pwm_set_chan_level(motor_L, PWM_CHAN_A, val);
+
+}
+
+void PWM_M_R_deg(uint16_t val) // 모터 RIGHT 제어 0~30도 
+{
+  // if(val >= 200 && val<= 255)
+//   pwm_duty = cmap(val, 0, 255, 0, 1000);
+
+  pwm_set_chan_level(motor_R, PWM_CHAN_B, val);
+}
+
+void Motor_grab(void){
+  PWM_M_L_deg(0);
+  PWM_M_R_deg(180);
+}
+
+void Motor_put(uint8_t deg){
+  PWM_M_L_deg(0+deg);
+  PWM_M_R_deg(180-deg);
+}
+
+void PWMOFF(void) //  LED만 끝나도록 한다
 {  
   pwm_set_chan_level(slice_num, PWM_CHAN_B, 0);
 }
