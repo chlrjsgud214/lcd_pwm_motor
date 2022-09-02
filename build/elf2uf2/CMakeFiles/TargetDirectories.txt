@@ -1,0 +1,5 @@
+C:/gitprj/mp_monitoringsystem/lcd_pwm_motor/build/elf2uf2/CMakeFiles/elf2uf2.dir
+C:/gitprj/mp_monitoringsystem/lcd_pwm_motor/build/elf2uf2/CMakeFiles/edit_cache.dir
+C:/gitprj/mp_monitoringsystem/lcd_pwm_motor/build/elf2uf2/CMakeFiles/rebuild_cache.dir
+C:/gitprj/mp_monitoringsystem/lcd_pwm_motor/build/elf2uf2/boot_uf2_headers/CMakeFiles/edit_cache.dir
+C:/gitprj/mp_monitoringsystem/lcd_pwm_motor/build/elf2uf2/boot_uf2_headers/CMakeFiles/rebuild_cache.dir

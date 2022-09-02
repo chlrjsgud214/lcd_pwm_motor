@@ -34,7 +34,7 @@ bool ret = false;
 static uint32_t pwm_m_l_deg= 60; // 초기 각도 설정 60도
 static uint32_t pwm_m_r_deg= 30; // 초기 각도 설정 30도
 static uint8_t pwm_deg = 5; // 각도 변경 최소 단위
-static uint8_t deg_val = 15;
+
 
 /*******************************************************************************
 function:
@@ -784,23 +784,23 @@ void TP_pwm_motor_main(void){
 
     GUI_DrawRectangle(10 , 60, 60, 110, WHITE, 1, 1); // 0도 범위
     GUI_DrawRectangle(10 , 60, 60, 110, BLACK, 0, 1); // 0도 외곽
-    GUI_DisString_EN(10+10 , 75, "0",&Font20,WHITE,BLACK); // 0도 글씨
+    GUI_DisString_EN(10+10 , 75, "8",&Font20,WHITE,BLACK); // 0도 글씨
 
     GUI_DrawRectangle(75 , 60, 125, 110, WHITE, 1, 1); // 5도
     GUI_DrawRectangle(75 , 60, 125, 110, BLACK, 0, 1); // 5도
-    GUI_DisString_EN(75+10 , 75, "5",&Font20,WHITE,BLACK); // 5도
+    GUI_DisString_EN(75+10 , 75, "13",&Font20,WHITE,BLACK); // 5도
 
-    GUI_DrawRectangle(135, 60, 185, 110, WHITE, 1, 1); // 10도
+    GUI_DrawRectangle(135, 60, 185, 110, GBLUE, 1, 1); // 10도
     GUI_DrawRectangle(135, 60, 185, 110, BLACK, 0, 1); // 10도
-    GUI_DisString_EN(135+10, 75, "10",&Font20,WHITE,BLACK); // 10도
+    GUI_DisString_EN(135+10, 75, "18",&Font20,GBLUE,BLACK); // 10도
 
-    GUI_DrawRectangle(195 , 60, 245, 110, GBLUE, 1, 1); // 15도
+    GUI_DrawRectangle(195 , 60, 245, 110, WHITE, 1, 1); // 15도
     GUI_DrawRectangle(195 , 60, 245, 110, BLACK, 0, 1); // 15도
-    GUI_DisString_EN(195+10 , 75,"15",&Font20,GBLUE,BLACK); // 15도
+    GUI_DisString_EN(195+10 , 75,"23",&Font20,WHITE,BLACK); // 15도
 
     GUI_DrawRectangle(260 , 60, 310, 110, WHITE, 1, 1); // 20도
     GUI_DrawRectangle(260 , 60, 310, 110, BLACK, 0, 1); // 20도
-    GUI_DisString_EN(260+10 , 75,"20",&Font20,WHITE,BLACK); // 20도
+    GUI_DisString_EN(260+10 , 75,"28",&Font20,WHITE,BLACK); // 20도
 
     GUI_DrawRectangle(10 ,140, 150, 215, WHITE, 1, 1); // 잡기
     GUI_DrawRectangle(10 ,140, 150, 215, BLACK, 0, 1); // 잡기
@@ -808,8 +808,8 @@ void TP_pwm_motor_main(void){
 
     GUI_DrawRectangle(170 , 140, 310, 215, GBLUE, 1, 1); // 풀기
     GUI_DrawRectangle(170 , 140, 310, 215, BLACK, 0, 1); // 풀기
-    GUI_DisString_EN(215 , 165, "PUT",&Font24,GBLUE,BLACK); // 풀기
-
+    GUI_DisString_EN(180 , 165, "RELEASE",&Font24,GBLUE,BLACK); // 풀기
+    deg_10=true;
 }
 
 
@@ -825,71 +825,76 @@ void TP_pwm_motor_move(uint8_t deg,bool status){
     if(deg_val != deg){
         deg_val = deg;
     
-        if(deg == 0 && !deg_0){ // 선택한 각도 활성화
+        if(deg == 8 && !deg_0){ // 선택한 각도 활성화
             GUI_DrawRectangle(10 , 60, 60-1, 110-1, GBLUE, 1, 1); // 0도 범위
-            GUI_DisString_EN(10+10 , 75, "0",&Font20,GBLUE,BLACK); // 0도 글씨
+            GUI_DisString_EN(10+10 , 75, "8",&Font20,GBLUE,BLACK); // 0도 글씨
             deg_0 = true;
-        }else if(deg == 5 && !deg_5){
+        }else if(deg == 13 && !deg_5){
             GUI_DrawRectangle(75 , 60, 125-1, 110-1, GBLUE, 1, 1); // 5도
-            GUI_DisString_EN(75+10 , 75, "5",&Font20,GBLUE,BLACK); // 5도
+            GUI_DisString_EN(75+10 , 75, "13",&Font20,GBLUE,BLACK); // 5도
             deg_5 = true;
-        }else if(deg == 10 && !deg_10){
+        }else if(deg == 18 && !deg_10){
             GUI_DrawRectangle(135, 60, 185-1, 110-1, GBLUE, 1, 1); // 10도
-            GUI_DisString_EN(135+10, 75, "10",&Font20,GBLUE,BLACK); // 10도
+            GUI_DisString_EN(135+10, 75, "18",&Font20,GBLUE,BLACK); // 10도
             deg_10 = true;
-        }else if(deg == 15 && !deg_15){
+        }else if(deg == 23 && !deg_15){
             GUI_DrawRectangle(195 , 60, 245-1, 110-1, GBLUE, 1, 1); // 15도
-            GUI_DisString_EN(195+10 , 75,"15",&Font20,GBLUE,BLACK); // 15도
+            GUI_DisString_EN(195+10 , 75,"23",&Font20,GBLUE,BLACK); // 15도
             deg_15 = true;
-        }else if(deg == 20 && !deg_20){
+        }else if(deg == 28 && !deg_20){
             GUI_DrawRectangle(260 , 60, 310-1, 110-1, GBLUE, 1, 1); // 20도
-            GUI_DisString_EN(260+10 , 75,"20",&Font20,GBLUE,BLACK); // 20도
+            GUI_DisString_EN(260+10 , 75,"28",&Font20,GBLUE,BLACK); // 20도
             deg_20 = true;
         }else {}
         TP_deg_before(deg_temp); // 활성화되었던 전 값 비활성화
+        
     }
 
     if(status ){
         if(!grab){
-            GUI_DrawRectangle(10 ,140, 150-1, 215-1, GBLUE, 1, 1); // 잡기
-            GUI_DisString_EN(50 , 165, "GRAB",&Font24,GBLUE,BLACK); // 잡기
+            
+            GUI_DrawRectangle(170 , 140, 310-1, 215-1, GBLUE, 1, 1); // 풀기
+            GUI_DisString_EN(180 , 165, "RELEASE",&Font24,GBLUE,BLACK); // 풀기
+            GUI_DrawRectangle(10 ,140, 150-1, 215-1, WHITE, 1, 1); // 잡기
+            GUI_DisString_EN(50 , 165, "GRAB",&Font24,WHITE,BLACK); // 잡기
             grab=true;
             put=false;
         }
         Motor_grab();
     }else if(!status){
         if(!put){
-            GUI_DrawRectangle(170 , 140, 310-1, 215-1, GBLUE, 1, 1); // 풀기
-            GUI_DisString_EN(215 , 165, "PUT",&Font24,GBLUE,BLACK); // 풀기
+            GUI_DrawRectangle(10 ,140, 150-1, 215-1, GBLUE, 1, 1); // 잡기
+            GUI_DisString_EN(50 , 165, "GRAB",&Font24,GBLUE,BLACK); // 잡기
+            GUI_DrawRectangle(170 , 140, 310-1, 215-1, WHITE, 1, 1); // 풀기
+            GUI_DisString_EN(180 , 165, "RELEASE",&Font24,WHITE,BLACK); // 풀기
             grab=false;
             put=true;
         }
-
         Motor_put(deg_val);
 
     }else {}
 }
 
 void TP_deg_before(uint8_t deg_before){
-    if(deg_before == 0 ){
-        GUI_DrawRectangle(10 , 60, 60-1, 110-1, GBLUE, 1, 1); // 0도 범위
-        GUI_DisString_EN(10+10 , 75, "0",&Font20,GBLUE,BLACK); // 0도 글씨
+    if(deg_before == 8 ){
+        GUI_DrawRectangle(10 , 60, 60-1, 110-1, WHITE, 1, 1); // 0도 범위
+        GUI_DisString_EN(10+10 , 75, "8",&Font20,WHITE,BLACK); // 0도 글씨
         deg_0 = false;
-    }else if(deg_before == 5 ){
-        GUI_DrawRectangle(75 , 60, 125-1, 110-1, GBLUE, 1, 1); // 5도
-        GUI_DisString_EN(75+10 , 75, "5",&Font20,GBLUE,BLACK); // 5도
+    }else if(deg_before == 13 ){
+        GUI_DrawRectangle(75 , 60, 125-1, 110-1, WHITE, 1, 1); // 5도
+        GUI_DisString_EN(75+10 , 75, "13",&Font20,WHITE,BLACK); // 5도
         deg_5 = false;
-    }else if(deg_before == 10 ){
-        GUI_DrawRectangle(135, 60, 185-1, 110-1, GBLUE, 1, 1); // 10도
-        GUI_DisString_EN(135+10, 75, "10",&Font20,GBLUE,BLACK); // 10도
+    }else if(deg_before == 18 ){
+        GUI_DrawRectangle(135, 60, 185-1, 110-1, WHITE, 1, 1); // 10도
+        GUI_DisString_EN(135+10, 75, "18",&Font20,WHITE,BLACK); // 10도
         deg_10 = false;
-    }else if(deg_before == 15 ){
-        GUI_DrawRectangle(195 , 60, 245-1, 110-1, GBLUE, 1, 1); // 15도
-        GUI_DisString_EN(195+10 , 75,"15",&Font20,GBLUE,BLACK); // 15도
+    }else if(deg_before == 23 ){
+        GUI_DrawRectangle(195 , 60, 245-1, 110-1, WHITE, 1, 1); // 15도
+        GUI_DisString_EN(195+10 , 75,"23",&Font20,WHITE,BLACK); // 15도
         deg_15 = false;
-    }else if(deg_before == 20 ){
-        GUI_DrawRectangle(260 , 60, 310-1, 110-1, GBLUE, 1, 1); // 20도
-        GUI_DisString_EN(260+10 , 75,"20",&Font20,GBLUE,BLACK); // 20도
+    }else if(deg_before == 28 ){
+        GUI_DrawRectangle(260 , 60, 310-1, 110-1, WHITE, 1, 1); // 20도
+        GUI_DisString_EN(260+10 , 75,"28",&Font20,WHITE,BLACK); // 20도
         deg_20 = false;
     }else {}
 }
@@ -962,79 +967,43 @@ void TP_DrawBoard(void)
         if (sTP_Draw.Xpoint < sLCD_DIS.LCD_Dis_Column &&
             //Dete/rmine whether the law is legal
             sTP_Draw.Ypoint < sLCD_DIS.LCD_Dis_Page) {
-                if (((sTP_Draw.Xpoint > 0 && sTP_Draw.Xpoint < 50 ) &&  //180 , 70, 300, 130  메인페이지
-				    (sTP_Draw.Ypoint  > 0 && sTP_Draw.Ypoint < 50)) ){ 
-                    TP_pwm_motor_main();  
+                // if (((sTP_Draw.Xpoint > 0 && sTP_Draw.Xpoint < 50 ) &&  //180 , 70, 300, 130  메인페이지
+				//     (sTP_Draw.Ypoint  > 0 && sTP_Draw.Ypoint < 50)) ){ 
+                //     TP_pwm_motor_main();  
                     
-                    }
-                }else if(((sTP_Draw.Xpoint > 180 && sTP_Draw.Xpoint < 300 ) &&  //180 , 70, 300, 130  측정기록
-				        (sTP_Draw.Ypoint  > 70 && sTP_Draw.Ypoint < 120)) && (pagestatus==0)){ 
+                //     }
+                // }else 
+                if((sTP_Draw.Xpoint > 10 && sTP_Draw.Xpoint < 60 ) &&  // 0도
+				        (sTP_Draw.Ypoint  > 60 && sTP_Draw.Ypoint < 110)){ 
+                         TP_pwm_motor_move(8,0);
 
-                }else if(((sTP_Draw.Xpoint > 20 && sTP_Draw.Xpoint < 140 ) &&  //20, 70, 140, 130 측정시작
-				        (sTP_Draw.Ypoint  > 70 && sTP_Draw.Ypoint < 120)) && (pagestatus==0)){
-
-                }else if(((sTP_Draw.Xpoint > 20 && sTP_Draw.Xpoint < 140 ) &&  //20, 155, 140, 215 센서
-				        (sTP_Draw.Ypoint  > 155 && sTP_Draw.Ypoint < 215) )&& (pagestatus==0)){
-
-                }else if(sTP_Draw.Xpoint > 180 && sTP_Draw.Xpoint < 300  &&  //180, 155, 300, 215 셋팅
-				        sTP_Draw.Ypoint  > 155 && sTP_Draw.Ypoint < 215 && pagestatus==0){
+                }else if((sTP_Draw.Xpoint > 75 && sTP_Draw.Xpoint < 125 ) &&  //5
+				        (sTP_Draw.Ypoint  > 60 && sTP_Draw.Ypoint < 110)){
+                            TP_pwm_motor_move(13,0);
+                }else if(((sTP_Draw.Xpoint > 135 && sTP_Draw.Xpoint < 185 ) &&  //10
+				        (sTP_Draw.Ypoint  > 60 && sTP_Draw.Ypoint < 110))){
+                            TP_pwm_motor_move(18,0);
+                }else if(sTP_Draw.Xpoint > 195 && sTP_Draw.Xpoint < 245  &&  //15
+				        sTP_Draw.Ypoint  > 60 && sTP_Draw.Ypoint < 110){
+                        TP_pwm_motor_move(23,0);
+                }else if(((sTP_Draw.Xpoint > 260 && sTP_Draw.Xpoint < 310 ) &&  // 20
+				        (sTP_Draw.Ypoint  > 60 && sTP_Draw.Ypoint < 110))){
+                        TP_pwm_motor_move(28,0);
                         
-                }else if(((sTP_Draw.Xpoint > 20 && sTP_Draw.Xpoint < 140 ) &&  // PWM START
-				        (sTP_Draw.Ypoint  > 70 && sTP_Draw.Ypoint < 120)) && (pagestatus==3)){
+                }else if(((sTP_Draw.Xpoint > 10 && sTP_Draw.Xpoint < 150 ) &&  // 릴리즈
+				        (sTP_Draw.Ypoint  > 140 && sTP_Draw.Ypoint < 215))){
+                        TP_pwm_motor_move(deg_val,0);
+                }else if(((sTP_Draw.Xpoint > 170 && sTP_Draw.Xpoint < 310 ) &&  // 그랩
+				        (sTP_Draw.Ypoint  > 140 && sTP_Draw.Ypoint < 215))){
                         
-                        
-                }else if(((sTP_Draw.Xpoint > 180 && sTP_Draw.Xpoint < 300 ) &&  // PWM STOP
-				        (sTP_Draw.Ypoint  > 70 && sTP_Draw.Ypoint < 120)) && (pagestatus==3)){
-                        
-                }else if(((sTP_Draw.Xpoint > 20 && sTP_Draw.Xpoint < 300 ) &&  // PWM bar
-				        (sTP_Draw.Ypoint  > 165 && sTP_Draw.Ypoint < 220)) && (pagestatus==3)){
-                        
+                        TP_pwm_motor_move(deg_val,1);
                         
                 }else{ 
                 }    
-			//  if(LCD_2_8 == id){
-				
-			// 	if (sTP_Draw.Xpoint > (sLCD_DIS.LCD_Dis_Column - 60) &&
-			// 			sTP_Draw.Ypoint < 16) {//Clear Board
-			// 			TP_Dialog();
-			// 	} else if(sTP_Draw.Xpoint > (sLCD_DIS.LCD_Dis_Column - 120) &&
-			// 			  sTP_Draw.Xpoint < (sLCD_DIS.LCD_Dis_Column - 80) &&
-			// 			  sTP_Draw.Ypoint < 16) { //afresh adjustment
-			// 		TP_Adjust();
-			// 		TP_Dialog();
-			// 	} else if(sTP_Draw.Xpoint > 0 && sTP_Draw.Xpoint < 15 &&
-			// 			  sTP_Draw.Ypoint > 0 && sTP_Draw.Ypoint < 15) {
-			// 		sTP_Draw.Color = BLUE;
-			// 	} else if(sTP_Draw.Xpoint > 20 && sTP_Draw.Xpoint < 35 &&
-			// 			  sTP_Draw.Ypoint > 0 && sTP_Draw.Ypoint < 15) {
-			// 		sTP_Draw.Color = GREEN;
-			// 	} else if(sTP_Draw.Xpoint > 40 && sTP_Draw.Xpoint < 55 &&
-			// 			  sTP_Draw.Ypoint > 0 && sTP_Draw.Ypoint < 15) {
-			// 		sTP_Draw.Color = RED;
-			// 	} else if(sTP_Draw.Xpoint > 60 && sTP_Draw.Xpoint < 75 &&
-			// 			  sTP_Draw.Ypoint > 0 && sTP_Draw.Ypoint < 15) {
-			// 		sTP_Draw.Color = YELLOW;
-			// 	} else if(sTP_Draw.Xpoint > 80 && sTP_Draw.Xpoint < 95 &&
-			// 			  sTP_Draw.Ypoint > 0 && sTP_Draw.Ypoint < 15) {
-			// 		sTP_Draw.Color = BLACK;
-			// 	} else {
-			// 		GUI_DrawPoint(sTP_Draw.Xpoint, sTP_Draw.Ypoint,
-			// 			  sTP_Draw.Color , DOT_PIXEL_1X1, DOT_FILL_RIGHTUP);
-			// 	 }
-			     
-			// }
         }
+    }
 }
 
-    // if(sstart && (pagestatus==3))
-    // {        
-        
-    //     // printf("OUTPWM: %d \r\n",pwmgui);
-    //     // Driver_Delay_ms(500);
-    // }else if(sstop){
-    //     pwmgui=0;
-        
-    // }
 
 
 

@@ -25,6 +25,8 @@
 #define TP_PRESS_DOWN           0x80
 #define TP_PRESSED              0x40
 
+static uint8_t deg_val = 18;
+
 //Touch screen structure
 typedef struct {
 	POINT Xpoint0;
@@ -69,7 +71,7 @@ void TP_gessensor_pwm_bar(void);
 
 void TP_pwm_motor_main(void);
 void TP_deg_before(uint8_t deg_before);
-
+void TP_pwm_motor_move(uint8_t deg,bool status);
 
 #endif
  

@@ -57,6 +57,12 @@ int lcd_test(void)
 	// TP_gesvallist();
 	//Driver_Delay_ms(50);
 	TP_pwm_motor_main();
+	// PWM_M_L_deg(400); // 1710 = 0 ~ 400 = 120
+	// PWM_M_R_deg(1710); // 1725 = 0도 
+	// Driver_Delay_ms(3000);
+	// PWM_M_L_deg(1710);
+	// PWM_M_R_deg(400); // 최소 동작 
+	TP_pwm_motor_move(deg_val,true); // 초기 풀어진 상태 15도
 	while(1){		
 		TP_DrawBoard(); 
 	}

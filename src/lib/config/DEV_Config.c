@@ -81,9 +81,9 @@ void DEV_PWM_Init(void)
   pwm_set_wrap(motor_L, 1800); // 180도 제어 
   pwm_set_wrap(motor_R, 1800); 
 
-  pwm_set_chan_level(slice_num, PWM_CHAN_B, 0); //GP25 - PWM B3
-  pwm_set_chan_level(motor_L, PWM_CHAN_A, 60*10); // GP0 - PWM A0
-  pwm_set_chan_level(motor_R, PWM_CHAN_B, 30*10); // GP0 - PWM B0
+  pwm_set_chan_level(slice_num, PWM_CHAN_B, 255); //GP25 - PWM B3
+  pwm_set_chan_level(motor_L, PWM_CHAN_A, 1800); // GP0 - PWM A0
+  pwm_set_chan_level(motor_R, PWM_CHAN_B, 1800); // GP0 - PWM B0
 
   pwm_set_enabled(slice_num, true);
   pwm_set_enabled(motor_L, true);
@@ -100,7 +100,7 @@ void PWM_LED_ON(uint16_t val) //
 
 }
 
-void PWM_M_L_deg(uint16_t val) // 모터 LEFT 제어 60~90도
+void PWM_M_L_deg(uint16_t val) // 모터 LEFT 제어 60~90도 GPIO 0번
 {  
 //   pwm_duty = cmap(val, 0, 255, 0, 1000);
   // if(val >= 200 && val<= 255)
@@ -108,7 +108,7 @@ void PWM_M_L_deg(uint16_t val) // 모터 LEFT 제어 60~90도
 
 }
 
-void PWM_M_R_deg(uint16_t val) // 모터 RIGHT 제어 0~30도 
+void PWM_M_R_deg(uint16_t val) // 모터 RIGHT 제어 0~30도 GPTI 1번
 {
   // if(val >= 200 && val<= 255)
 //   pwm_duty = cmap(val, 0, 255, 0, 1000);
@@ -117,13 +117,13 @@ void PWM_M_R_deg(uint16_t val) // 모터 RIGHT 제어 0~30도
 }
 
 void Motor_grab(void){
-  PWM_M_L_deg(0);
-  PWM_M_R_deg(180);
+  PWM_M_L_deg(710);
+  PWM_M_R_deg(1710);
 }
 
 void Motor_put(uint8_t deg){
-  PWM_M_L_deg(0+deg);
-  PWM_M_R_deg(180-deg);
+  PWM_M_L_deg(710+(deg*11));
+  PWM_M_R_deg(1710-(deg*11));
 }
 
 void PWMOFF(void) //  LED만 끝나도록 한다
